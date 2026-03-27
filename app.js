@@ -1,7 +1,9 @@
 const express = require("express");
 const db = require("./db/todo.db");
 const app = express();
+const enableCors = require("./middlewares/cors");
 const todoRoutes = require("./routes/todo.routes");
+app.use(enableCors);
 app.use(express.json());
 
 app.get("/", (req, res) => {
