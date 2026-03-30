@@ -1,0 +1,13 @@
+@import "tailwindcss";
+body {
+  background-color: blueviolet;
+}
+
+#navbar {
+  color: white;
+  justify-content: space-between;
+}
+
+#navbar nav {
+  justify-self: space-between;
+}

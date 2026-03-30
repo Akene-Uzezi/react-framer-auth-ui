@@ -1,9 +1,10 @@
 const express = require("express");
 const db = require("./db/todo.db");
 const app = express();
-const enableCors = require("./middlewares/cors");
+const cors = require("cors");
+const authRoutes = require("./routes/auth.routes");
 const todoRoutes = require("./routes/todo.routes");
-app.use(enableCors);
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/auth", authRoutes);
 app.use("/todos", todoRoutes);
 
 app.use((error, req, res, next) => {
