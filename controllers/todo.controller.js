@@ -53,9 +53,12 @@ const deleteTodo = async (req, res, next) => {
   res.json({ message: "Todo deleted" });
 };
 
+const todoDashboard = async (req, res) => {};
+
 module.exports = {
   getAllTodos,
   addTodo,
   updateTodo,
   deleteTodo,
+  todoDashboard,
 };

@@ -51,6 +51,7 @@ const Signup = () => {
         setSignupFail(true);
 
         setTimeout(() => {
+          setError(null);
           setSignupFail(null);
         }, 1500);
       }
@@ -149,7 +150,7 @@ const Signup = () => {
           </motion.div>
           <motion.button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || signupSuccess}
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

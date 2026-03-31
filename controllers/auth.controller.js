@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const bcrypt = require("bcrypt");
 const signup = async (req, res) => {
   const { username, password } = req.body;
   const user = new User(username, password);
@@ -20,12 +21,16 @@ const login = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findByUsername(username);
   if (user && (await bcrypt.compare(password, user.password))) {
+    const token = await User.getToken(user._id);
     res.status(200).json({
       message: "Login successful",
+      token,
+      user,
     });
   } else {
     res.status(401).json({
       message: "Invalid username or password",
+      error: "invalid credentials",
     });
   }
 };

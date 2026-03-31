@@ -1,5 +1,7 @@
 const db = require("../db/todo.db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 class User {
   constructor(username, password) {
     this.username = username;
@@ -20,6 +22,12 @@ class User {
       .collection("users")
       .findOne({ username: this.username });
     return user;
+  }
+
+  static getToken(userId) {
+    return jwt.sign({ user: userId }, process.env.JWT_SECRET, {
+      expiresIn: "2h",
+    });
   }
 
   static async findByUsername(username) {
