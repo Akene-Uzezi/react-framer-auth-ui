@@ -5,7 +5,7 @@ import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/dashboard";
 const App = () => {
   return (
     <Router>

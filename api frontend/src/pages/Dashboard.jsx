@@ -21,7 +21,6 @@ const Dashboard = () => {
       <h1 className="text-white text-3xl font-bold">
         Welcome, {user?.username || "Guest"}
       </h1>
-      <p className="text-slate-400 mt-2">Email: {user?.email}</p>
     </div>
   );
 };
