@@ -1,17 +1,31 @@
 import { Link } from "react-router-dom";
-import { motion } from "motion/react";
-const MotionLink = motion.create(Link);
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import "./navbar.css";
+import { motion } from "framer-motion"; // Note: ensure you are using 'framer-motion' or 'motion/react' consistently
+
+// Define variants outside to prevent re-creation on render
+const navVariants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeInOut",
+      staggerChildren: 0.1, // Staggering requires children to have variants too
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: 10 },
+  visible: { opacity: 1, x: 0 },
+};
+
 const Navbar = () => {
-  const getVariants = {
-    hidden: { opacity: 0, x: 30 },
-    visible: { opacity: 1, x: 0 },
-  };
   return (
-    <div className="flex gap-4 items-center bg-slate-950 p-4" id="navbar">
+    <motion.div
+      className="flex gap-4 items-center bg-slate-950 p-4"
+      id="navbar"
+    >
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -20,53 +34,64 @@ const Navbar = () => {
       >
         My App
       </motion.h1>
-      <nav id="nav">
+
+      <motion.nav id="nav">
         <motion.ul
-          variants={getVariants}
+          variants={navVariants}
           initial="hidden"
           animate="visible"
-          transition={{
-            duration: 0.8,
-            ease: "easeInOut",
-            staggerChildren: 0.5,
-          }}
           className="flex gap-6 item-center"
         >
-          <MotionLink
+          {/* Home Link */}
+          <motion.li
+            variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
-            to="/"
-            element={<Home />}
           >
-            Home
-          </MotionLink>
+            <Link
+              to="/"
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
+            >
+              Home
+            </Link>
+          </motion.li>
 
-          <MotionLink
+          {/* Login Link */}
+          <motion.li
+            variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
-            to="/login"
-            element={<Login />}
           >
-            Login
-          </MotionLink>
+            <Link
+              to="/login"
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
+            >
+              Login
+            </Link>
+          </motion.li>
 
-          <MotionLink
+          {/* Signup Link */}
+          <motion.li
+            variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
-            to="/signup"
-            element={<Signup />}
           >
-            Signup
-          </MotionLink>
+            <Link
+              to="/signup"
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg"
+            >
+              Signup
+            </Link>
+          </motion.li>
         </motion.ul>
-      </nav>
-    </div>
+      </motion.nav>
+    </motion.div>
   );
 };
 
