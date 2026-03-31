@@ -91,7 +91,7 @@ const Login = () => {
         )}
         {success && (
           <motion.p
-            className="bg-success-400 px-20 py-3 mb-2 rounded-lg"
+            className="bg-green-400 px-20 py-3 mb-2 rounded-lg"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
