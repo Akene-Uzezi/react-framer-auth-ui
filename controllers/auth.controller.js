@@ -2,6 +2,12 @@ const User = require("../models/user.model");
 const signup = async (req, res) => {
   const { username, password } = req.body;
   const user = new User(username, password);
+  if (await user.userExists()) {
+    return res.status(409).json({
+      message: "Username already exists",
+      err: "Username already exists",
+    });
+  }
   try {
     await user.saveUser();
     res.json({ message: "signup successful" });

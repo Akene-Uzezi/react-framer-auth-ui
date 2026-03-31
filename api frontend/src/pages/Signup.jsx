@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 const Signup = () => {
-  const [passwordMatch, setPasswordMatch] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(null);
   const [signupFail, setSignupFail] = useState(null);
@@ -21,6 +21,13 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmpassword) {
+      setError("Passwords do not match");
+      setTimeout(() => {
+        setError(null);
+      }, 1500);
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await fetch(
@@ -36,10 +43,13 @@ const Signup = () => {
         setTimeout(() => {
           setSignupSuccess(false);
           navigate("/login");
-        }, 1500);
+        }, 3000);
       }
       if (!response.ok) {
+        const data = await response.json();
+        setError(data.err || "signup failed");
         setSignupFail(true);
+
         setTimeout(() => {
           setSignupFail(null);
         }, 1500);
@@ -94,6 +104,16 @@ const Signup = () => {
             transition={{ duration: 0.8 }}
           >
             Signup failed
+          </motion.p>
+        )}
+        {error && (
+          <motion.p
+            className="bg-red-400 px-20 py-3 mb-2 rounded-lg"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {error}
           </motion.p>
         )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

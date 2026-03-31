@@ -14,6 +14,14 @@ class User {
     });
   }
 
+  async userExists() {
+    const user = await db
+      .getDb()
+      .collection("users")
+      .findOne({ username: this.username });
+    return user;
+  }
+
   static async findByUsername(username) {
     const user = await db.getDb().collection("users").findOne({ username });
     return user;
